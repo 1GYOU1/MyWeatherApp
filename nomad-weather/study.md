@@ -89,3 +89,25 @@ const styles = {
 ```
 
 <br>
+
+### #2.3 Third Party Packages
+
+react-native component와 Api
+
+component
+- 화면에 렌더링할 항목
+- return 안에 있는 것
+- ex) < view />
+- https://reactnative.dev/docs/components-and-apis
+
+api
+- 자바스크립트 코드
+- ex) Vibration 휴대폰 진동 기능
+- https://reactnative.dev/docs/accessibilityinfo
+
+Expo SDK
+- Expo 팀에서 자체적으로 packages와 apis를 만듬
+- React native packages를 찾을 수 없다면 Expo Packages 또는 Api 쓰면 됨
+- https://docs.expo.dev/versions/latest/
+
+<br>
