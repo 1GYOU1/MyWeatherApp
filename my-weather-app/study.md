@@ -111,3 +111,24 @@ Expo SDK
 - https://docs.expo.dev/versions/latest/
 
 <br>
+
+### #2.4 Layout System
+
+- 모든 view는 flex container
+- flexDirection의 기본 값은 column
+- 부모 flex box를 기준으로 children box의 비율을 정할 수 있음.
+
+```js
+import React from "react";
+import { View } from "react-native";
+
+export default function App() {
+  return (
+    <View style={{ flex: 1, flexDirection: "row" }}>
+      <View style={{ flex: 1, backgroundColor: "lightpink" }}></View>
+      <View style={{ flex: 1, backgroundColor: "lemonchiffon" }}></View>
+      <View style={{ flex: 1, backgroundColor: "lavender" }}></View>
+    </View>
+  );
+}
+```

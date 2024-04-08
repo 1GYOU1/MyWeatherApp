@@ -1,1 +1,1 @@
-# NomadWeather
+# MyWeatherApp

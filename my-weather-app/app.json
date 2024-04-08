@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "nomad-weather",
-    "slug": "nomad-weather",
+    "name": "my-weather-app",
+    "slug": "my-weather-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
