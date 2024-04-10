@@ -403,4 +403,76 @@ export default function App() {
 /* 코드 생략 */
 ```
 
-결과 화면
+<br>
+
+### API_KEY .env로 숨기기
+
+#### 1. env 파일 추가하기
+
+파일 경로 - my-weather-app/.env
+```js
+// env 파일 작성 예시
+API_KEY=abcdefgabcdefgabcdefg
+```
+
+파일 경로 - my-weather-app/.gitignore
+#### 2. gitignore 파일에 env 추가
+
+```
+.env
+```
+
+#### 2. 둘 중 하나 설치
+>$ npm install react-native-dotenv
+
+>$ yarn add react-native-dotenv
+
+#### 3. babel.config.js 수정하기
+파일 경로 - my-weather-app/babel.config.js
+```js
+module.exports = function(api) {
+  api.cache(true);
+  return {
+    presets: ['babel-preset-expo'],
+    plugins: [ // 여기부터 추가
+      [
+        "module:react-native-dotenv",
+        {
+          moduleName: "@env",
+          path: ".env",
+          blacklist: null,
+          whitelist: null,
+          safe: false,
+          allowUndefined: true,
+        },
+      ],
+    ],
+  };
+};
+
+```
+
+#### 4. 환경변수 import
+
+파일 경로 - my-weather-app/App.js
+```js
+import { API_KEY } from "@env";
+// babel.config.js파일에서 모듈네임을 @env로 설정했기 때문에 @env에서 불러온다.
+// 모듈네임을 설정하지 않은 경우에는 import { API_KEY } from 'react-native-dotenv;
+
+const response = await fetch(
+  `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}&units=metric`
+);
+```
+
+#### 5. 타입스크립트 기반이라면
+env.d.ts 파일을 루트에 만들고 아래와 같이 타입 지정을 해주지 않으면 에러 발생한다고 함. 참고 하기 !
+
+파일 경로 - my-weather-app/.env.d.ts
+```js
+declare module '@env' {
+  export const API_KEY: string;
+}
+```
+
+참고 사이트- https://velog.io/@chloedev/React-Native-%EB%A6%AC%EC%95%A1%ED%8A%B8%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C%EC%97%90%EC%84%9C-%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0
