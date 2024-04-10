@@ -405,6 +405,11 @@ export default function App() {
 
 <br>
 
+### #2.8 Weather
+
+
+<br>
+
 ### API_KEY .env로 숨기기
 
 #### 1. env 파일 추가하기
