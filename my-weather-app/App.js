@@ -11,6 +11,7 @@ import {
 	StyleSheet,
 	ScrollView,
 } from "react-native";
+import { MaterialIcons } from '@expo/vector-icons';
 import { Fontisto } from "@expo/vector-icons";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window"); // 기기의 화면 크기 width 값 불러오는 API
@@ -35,21 +36,28 @@ export default function App() {
 	  if (!granted) { // 허가를 받지 않았다면
 		setOk(false);
 	  }
-	  const {
-		coords: { latitude, longitude },
-	  } = await Location.getCurrentPositionAsync({ accuracy: 5 });
-	   // 공식 문서에 따라 경도, 위도, 구글맵 사용 여부 값을 넘겨야 함.
-	  const location = await Location.reverseGeocodeAsync(
-		{ latitude, longitude },
-		{ useGoogleMaps: false }
-	  );
-	  setCity(location[0].city);
-	  const response = await fetch(
-		`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}&units=metric`
-	  );
-	  const json = await response.json();
-	  setDays(json.daily);
+		const {
+			coords: { latitude, longitude },
+		} = await Location.getCurrentPositionAsync({ accuracy: 5 });
+		// 공식 문서에 따라 경도, 위도, 구글맵 사용 여부 값을 넘겨야 함.
+		const location = await Location.reverseGeocodeAsync(
+			{ latitude, longitude },
+			{ useGoogleMaps: false }
+		);
+		setCity(location[0].city);
+		const response = await fetch(
+			`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+		);
+		const json = await response.json();
+		setDays(
+			json.list.filter((weather) => {
+				if (weather.dt_txt.includes("03:00:00")) {// "00:00:00"는 표준시 00시를 기준, 한국은 표준시보다 9시간을 더해야함. 따라서 한국의 정오(낮 12시)로 설정하려면 "03:00:00"으로 설정
+					return weather;
+				}
+			})
+		);
 	};
+
 	useEffect(() => {
 		getWeather();
 	}, []);	
@@ -58,6 +66,7 @@ export default function App() {
 		<View style={styles.container}>
 			<StatusBar style="light"/>
 			<View style={styles.city}>
+				<MaterialIcons name="place" size={35} color="pink" />
 				<Text style={styles.cityName}>{city}</Text>
 			</View>
 			<ScrollView
@@ -73,30 +82,47 @@ export default function App() {
 							color="white"
 							style={{ marginTop: 10 }}
 							size="large"
-						/>
+						/>{/* 로딩 애니메이션 */}
 					</View>
 					) : (
 					days.map((day, index) => (
 						<View key={index} style={styles.day}>
+							<Text 
+							style={{
+								color: "pink",
+								fontSize: 32,
+								width:"100%",
+								textAlign:"center",
+								fontWeight:"500",
+								paddingBottom:"1.5%"
+							}}>
+								{/* 날짜 */}
+								{new Date(day.dt * 1000).toString().substring(0, 10)}
+							</Text>
 							 <View
 								style={{
 								flexDirection: "row",
-								alignItems: "center",
 								width: "100%",
-								justifyContent: "space-between",
+								justifyContent: "center",
+								marginLeft:"3%"
 								}}
 							>
 								<Text style={styles.temp}>
-								{parseFloat(day.temp.day).toFixed(1)}
+								{parseFloat(day.main.temp).toFixed(1)}{/* 온도 소수점 한자리수까지만 노출 */}
 								</Text>
+								{/* 날씨 아이콘 */}
 								<Fontisto
 								name={icons[day.weather[0].main]}
-								size={50}
+								size={35}
 								color="pink"
 								/>
 							</View>
-							<Text style={styles.description}>{day.weather[0].main}</Text>
-							<Text style={styles.tinyText}>{day.weather[0].description}</Text>
+							<Text style={styles.description}>
+								{day.weather[0].main}
+							</Text>{/* 날씨 */}
+							<Text style={styles.tinyText}>
+								{day.weather[0].description
+							}</Text>{/* 날씨 설명 */}
 						</View>
 					))
 				)}
@@ -111,38 +137,42 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
   city: {
-    flex: 1,
-    justifyContent: "center",
+    flex: 1.1,
+	flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+	marginTop:30,
+	marginLeft:-15,
   },
   cityName: {
-    fontSize: 38,
+    fontSize: 36,
     fontWeight: "500",
-	color: "pink"
+	color: "pink",
   },
   weather: {},
   day: {
 	width: SCREEN_WIDTH,
-    alignItems: "center",
-	alignItems: "flex-start",
     paddingHorizontal: 20,
   },
   temp: {
-    marginTop: 50,
 	fontWeight: "600",
     fontSize: 100,
 	color: "pink"
   },
   description: {
-	marginTop: -10,
-    fontSize: 30,
+	marginTop: 3,
+    fontSize: 45,
 	color: "pink",
 	fontWeight: "500",
+	width:"100%",
+	textAlign:"center"
   },
   tinyText: {
-	marginTop: -5,
+	marginTop: 2,
     fontSize: 20,
 	color: "pink",
-	fontWeight: "500",
+	fontWeight: "400",
+	width:"100%",
+	textAlign:"center"
   },
 });

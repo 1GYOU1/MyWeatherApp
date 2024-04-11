@@ -152,6 +152,13 @@ const styles = {
 
 <br>
 
+4. ES6 문법 사용
+```js
+<View style={{ ...styles.day, alignItems: "center" }}></View>
+```
+
+<br>
+
 ### #2.3 Third Party Packages
 
 react-native component와 Api
@@ -407,6 +414,51 @@ export default function App() {
 
 ### #2.8 Weather
 
+Daily Forecast 16 days 무료 API 사용 
+- https://openweathermap.org/ 가입 후 API key 발급
+  - 무료 API는 2가지가 있음, 2번 사용
+    1. Current Weather
+    2. 3-hour Forecast 5 days
+- 위도와 경도, API Key 필수
+
+<br>
+
+API call 예시
+```js
+api.openweathermap.org/data/2.5/forecast/daily?lat={lat}&lon={lon}&cnt={cnt}&appid={API key}
+```
+
+적용<br>
+my-weather-app/App.js
+```js
+const [days, setDays] = useState([]); // 일기예보 array 저장
+
+const response = await fetch(
+  `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+);
+const json = await response.json();
+setDays(
+  json.list.filter((weather) => {
+    if (weather.dt_txt.includes("03:00:00")) {// "00:00:00"는 표준시 00시를 기준, 한국은 표준시보다 9시간을 더해야함. 따라서 한국의 정오(낮 12시)로 설정하려면 "03:00:00"으로 설정
+      return weather;
+    }
+  })
+);
+```
+
+<br>
+
+ActivityIndicator 로딩 아이콘 component
+- https://reactnative.dev/docs/activityindicator
+
+my-weather-app/App.js
+```js
+<ActivityIndicator
+  color="white"
+  style={{ marginTop: 10 }}
+  size="large"
+/>{/* 로딩 애니메이션 */}
+```
 
 <br>
 
@@ -481,3 +533,225 @@ declare module '@env' {
 ```
 
 참고 사이트- https://velog.io/@chloedev/React-Native-%EB%A6%AC%EC%95%A1%ED%8A%B8%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C%EC%97%90%EC%84%9C-%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0
+
+<br>
+
+### #2.10 Icons
+
+expo를 사용해서 앱을 만들었다면, "@expo/vector-icons"가 설치되어 있음.
+
+- https://icons.expo.fyi/Index
+
+사용법
+
+![스크린샷 2024-04-11 오후 10 22 25](https://github.com/1GYOU1/MyWeatherApp/assets/90018379/f06a297f-670c-4eb3-8246-8338432fa485)
+
+
+my-weather-app/App.js 최상단에 import
+```js
+import { Fontisto } from "@expo/vector-icons";
+```
+
+여러가지 아이콘을 사용하기 위해 name을 object에서 가져오도록 수정.
+```js
+const icons = {
+	Clouds: "cloudy",
+	Clear: "day-sunny",
+	Atmosphere: "cloudy-gusts",
+	Snow: "snow",
+	Rain: "rains",
+	Drizzle: "rain",
+	Thunderstorm: "lightning",
+};
+
+<Fontisto
+  name={icons[day.weather[0].main]}
+  size={50}
+  color="pink"
+/>
+```
+
+<br>
+
+---
+my-weather-app/App.js - 최종
+```js
+import { API_KEY } from '@env';
+
+import * as Location from "expo-location";
+import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from "react";
+import {
+	View,
+	Text,
+	Dimensions,
+	ActivityIndicator,
+	StyleSheet,
+	ScrollView,
+} from "react-native";
+import { MaterialIcons } from '@expo/vector-icons';
+import { Fontisto } from "@expo/vector-icons";
+
+const { width: SCREEN_WIDTH } = Dimensions.get("window"); // 기기의 화면 크기 width 값 불러오는 API
+
+const icons = {
+	Clouds: "cloudy",
+	Clear: "day-sunny",
+	Atmosphere: "cloudy-gusts",
+	Snow: "snow",
+	Rain: "rains",
+	Drizzle: "rain",
+	Thunderstorm: "lightning",
+};
+
+export default function App() {
+
+	const [city, setCity] = useState("Loading...");
+	const [days, setDays] = useState([]);
+	const [ok, setOk] = useState(true);
+	const getWeather = async () => {
+	  const { granted } = await Location.requestForegroundPermissionsAsync();// 앱 사용 중에만 허용
+	  if (!granted) { // 허가를 받지 않았다면
+		setOk(false);
+	  }
+		const {
+			coords: { latitude, longitude },
+		} = await Location.getCurrentPositionAsync({ accuracy: 5 });
+		// 공식 문서에 따라 경도, 위도, 구글맵 사용 여부 값을 넘겨야 함.
+		const location = await Location.reverseGeocodeAsync(
+			{ latitude, longitude },
+			{ useGoogleMaps: false }
+		);
+		setCity(location[0].city);
+		const response = await fetch(
+			`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+		);
+		const json = await response.json();
+		setDays(
+			json.list.filter((weather) => {
+				if (weather.dt_txt.includes("03:00:00")) {// "00:00:00"는 표준시 00시를 기준, 한국은 표준시보다 9시간을 더해야함. 따라서 한국의 정오(낮 12시)로 설정하려면 "03:00:00"으로 설정
+					return weather;
+				}
+			})
+		);
+	};
+
+	useEffect(() => {
+		getWeather();
+	}, []);	
+
+	return (
+		<View style={styles.container}>
+			<StatusBar style="light"/>
+			<View style={styles.city}>
+				<MaterialIcons name="place" size={35} color="pink" />
+				<Text style={styles.cityName}>{city}</Text>
+			</View>
+			<ScrollView
+				pagingEnabled /* 페이징 기능 */
+				horizontal /* 가로 스크롤 */
+				showsHorizontalScrollIndicator={false} /* 스크롤 바 숨기기 */
+				// indicatorStyle="white" ios에서는 스크롤 바 색상 변경 가능. aos는 지원 X
+				contentContainerStyle={styles.weather}
+			>
+				{days === undefined ? (
+			   		<View style={{ ...styles.day, alignItems: "center" }}>
+						<ActivityIndicator
+							color="white"
+							style={{ marginTop: 10 }}
+							size="large"
+						/>{/* 로딩 애니메이션 */}
+					</View>
+					) : (
+					days.map((day, index) => (
+						<View key={index} style={styles.day}>
+							<Text 
+							style={{
+								color: "pink",
+								fontSize: 32,
+								width:"100%",
+								textAlign:"center",
+								fontWeight:"500",
+								paddingBottom:"1.5%"
+							}}>
+								{/* 날짜 */}
+								{new Date(day.dt * 1000).toString().substring(0, 10)}
+							</Text>
+							 <View
+								style={{
+								flexDirection: "row",
+								width: "100%",
+								justifyContent: "center",
+								marginLeft:"3%"
+								}}
+							>
+								<Text style={styles.temp}>
+								{parseFloat(day.main.temp).toFixed(1)}{/* 온도 소수점 한자리수까지만 노출 */}
+								</Text>
+								{/* 날씨 아이콘 */}
+								<Fontisto
+								name={icons[day.weather[0].main]}
+								size={35}
+								color="pink"
+								/>
+							</View>
+							<Text style={styles.description}>
+								{day.weather[0].main}
+							</Text>{/* 날씨 */}
+							<Text style={styles.tinyText}>
+								{day.weather[0].description
+							}</Text>{/* 날씨 설명 */}
+						</View>
+					))
+				)}
+			</ScrollView>
+		</View>
+	);
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "black",
+  },
+  city: {
+    flex: 1.1,
+	flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+	marginTop:30,
+	marginLeft:-15,
+  },
+  cityName: {
+    fontSize: 36,
+    fontWeight: "500",
+	color: "pink",
+  },
+  weather: {},
+  day: {
+	width: SCREEN_WIDTH,
+    paddingHorizontal: 20,
+  },
+  temp: {
+	fontWeight: "600",
+    fontSize: 100,
+	color: "pink"
+  },
+  description: {
+	marginTop: 3,
+    fontSize: 45,
+	color: "pink",
+	fontWeight: "500",
+	width:"100%",
+	textAlign:"center"
+  },
+  tinyText: {
+	marginTop: 2,
+    fontSize: 20,
+	color: "pink",
+	fontWeight: "400",
+	width:"100%",
+	textAlign:"center"
+  },
+});
+```
