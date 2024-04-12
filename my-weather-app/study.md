@@ -760,27 +760,41 @@ const styles = StyleSheet.create({
 
 ### react-native eas 배포
 
-이전에는 최신 eas-cli 설치를 위해 하단 전역 명령어 사용했지만 이제는 XXX 생략 가능.
+#### 1. 최신 EAS CLI 설치
 >$ npm install -g eas-cli
 
-1. expo 계정에 로그인
+#### 2. expo 계정에 로그인
 
 >$ npx expo login
 
 >$ npx eas login
 
-2. eas build
+#### 3. 프로젝트 구성
+
+>$ npx eas build:configure
+
+#### 4. 빌드 실행 (스토어 배포용)
 
 build가 완료되면, expo 사이트 > 생성한 프로젝트 > build 된 내 앱을 확인 가능
 
->$ npx eas build
+>$ npx eas build --platform android
 
-5. expo 사이트 > 생성한 프로젝트 > 사이드 메뉴 맨 밑 "Settings"에서 "Project Privacy"를 `Public`으로 설정
+>$ npx eas build --platform ios
 
-3. eas update
+>$ npx eas build --platform all
+
+#### 5. 빌드 리스트 확인
+
+>$ npx eas build:list
+
+#### 6. 빌드 배포
 
 >$ npx eas update
 
-4. update가 끝나면 Website link 클릭, 사이트 우측 상단에 Preview QR 확인.
+#### 7. expo 사이트 > 생성한 프로젝트 > 사이드 메뉴 맨 밑 "Settings"에서 "Project Privacy"를 `Public`으로 설정
+
+#### 8. update가 끝나면 Website link 클릭, 사이트 우측 상단에 Preview QR 확인.
+
+<br>
 
 참고 url - https://docs.expo.dev/build/setup/
