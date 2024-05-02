@@ -73,6 +73,18 @@ const styles = StyleSheet.create({
 });
 ```
 
+![490FDD07-B159-499D-AB5D-29F407E8C166_1_105_c](https://github.com/1GYOU1/MyWeatherApp/assets/90018379/3f83ff16-150d-4db4-aaa1-d4b2270144d7)
+
+
+statusBar light 테마
+
+![126C6591-4AE4-4E0A-93D4-8FD0AE3EFC5D_4_5005_c](https://github.com/1GYOU1/MyWeatherApp/assets/90018379/addea3a9-7124-4a45-bdc1-0de7c1ef37c6)
+
+statusBar dark 테마
+
+![2181A384-7031-49D2-AA74-DE456E5335E5_4_5005_c](https://github.com/1GYOU1/MyWeatherApp/assets/90018379/8c57917b-2e1c-4fd8-b6e5-09dae90566e6)
+
+
 <br>
 
 ### style 작성 방법
@@ -202,6 +214,9 @@ export default function App() {
   );
 }
 ```
+
+![55161B9E-8F24-4699-841F-1A31BEAF3DE2_1_105_c](https://github.com/1GYOU1/MyWeatherApp/assets/90018379/694268bb-7604-42ce-8945-8138f6f39be6)
+
 
 <br>
 
@@ -410,6 +425,9 @@ export default function App() {
 /* 코드 생략 */
 ```
 
+![app1](https://github.com/1GYOU1/MyWeatherApp/assets/90018379/5d741bdd-fff0-4f6b-a03f-de4ef3a705e6)
+
+
 <br>
 
 ### #2.8 Weather
@@ -462,7 +480,7 @@ my-weather-app/App.js
 
 <br>
 
-### API_KEY .env로 숨기기
+### API_KEY .env로 숨기기 (ios)
 
 #### 1. env 파일 추가하기
 
@@ -755,6 +773,18 @@ const styles = StyleSheet.create({
   },
 });
 ```
+
+<br>
+
+최종 화면 - iphone
+
+![05332010-ADA6-4C36-A645-60D490D6A1B4_1_105_c](https://github.com/1GYOU1/MyWeatherApp/assets/90018379/16e49911-0f06-4a5f-8ad5-5733d0e53832)
+
+
+![스크린샷 2024-04-13 오전 12 51 28](https://github.com/1GYOU1/MyWeatherApp/assets/90018379/992d7e7a-f9e1-4b89-9e5d-5f717bd38ce9)
+
+ios, aos 애뮬레이터로 실행해본 결과,
+.env 파일이 aos에서 제대로 작동되지 않는 오류가 있었다 ㅠ_ㅜ
 
 <br>
 
