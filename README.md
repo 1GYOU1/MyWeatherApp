@@ -5,6 +5,7 @@
 - 사용자의 좌표를 이용하여 사용자의 위치에 따른 날씨 API를 사용해 도시 이름, 온도, 습도 등의 일기예보 정보를 가져와 보여주는 기능
 
 <br>
+
 ### 👀 MainPage View
 
 <div style="display:flex;">
