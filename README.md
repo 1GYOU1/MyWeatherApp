@@ -1,6 +1,6 @@
 # MyWeatherApp
 
-#### 사용자의 위치에 따른 16일간의 기상 예보 날씨 어플
+#### 사용자의 위치에 따른 5일간의 기상 예보 날씨 어플
 
 - 사용자의 좌표를 이용하여 사용자의 위치에 따른 날씨 API를 사용해 도시 이름, 온도, 습도 등의 일기예보 정보를 가져와 보여주는 기능
 
@@ -31,7 +31,8 @@
     - Address Geocoding 사용자가 제공한 주소를 기반으로 위도와 경도 추출
     - Phone Geolocation 사용자의 휴대폰의 현재 위치를 식별
 - 날짜 출력
-- 날씨 API 사용(Data Fetching)
+- 날씨 API 사용
+    - Data Fetching
 - Expo 아이콘 사용
 - Responsive Design
 

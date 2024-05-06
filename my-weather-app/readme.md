@@ -432,11 +432,11 @@ export default function App() {
 
 ### #2.8 Weather
 
-Daily Forecast 16 days 무료 API 사용 
+무료 API 사용 
 - https://openweathermap.org/ 가입 후 API key 발급
   - 무료 API는 2가지가 있음, 2번 사용
     1. Current Weather
-    2. 3-hour Forecast 5 days
+    2. 3-hour Forecast 5 days 5일간 3시간 간격 예측
 - 위도와 경도, API Key 필수
 
 <br>
