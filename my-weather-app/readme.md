@@ -73,17 +73,15 @@ const styles = StyleSheet.create({
 });
 ```
 
-![490FDD07-B159-499D-AB5D-29F407E8C166_1_105_c](https://github.com/1GYOU1/MyWeatherApp/assets/90018379/3f83ff16-150d-4db4-aaa1-d4b2270144d7)
-
+<img src="https://github.com/1GYOU1/MyWeatherApp/assets/90018379/3f83ff16-150d-4db4-aaa1-d4b2270144d7" style="width:300px"/>
 
 statusBar dark 테마
 
-![126C6591-4AE4-4E0A-93D4-8FD0AE3EFC5D_4_5005_c](https://github.com/1GYOU1/MyWeatherApp/assets/90018379/addea3a9-7124-4a45-bdc1-0de7c1ef37c6)
+<img src="https://github.com/1GYOU1/MyWeatherApp/assets/90018379/addea3a9-7124-4a45-bdc1-0de7c1ef37c6" style="width:300px"/>
 
 statusBar light 테마
 
-![2181A384-7031-49D2-AA74-DE456E5335E5_4_5005_c](https://github.com/1GYOU1/MyWeatherApp/assets/90018379/8c57917b-2e1c-4fd8-b6e5-09dae90566e6)
-
+<img src="https://github.com/1GYOU1/MyWeatherApp/assets/90018379/8c57917b-2e1c-4fd8-b6e5-09dae90566e6" style="width:300px"/>
 
 <br>
 
@@ -215,8 +213,7 @@ export default function App() {
 }
 ```
 
-![55161B9E-8F24-4699-841F-1A31BEAF3DE2_1_105_c](https://github.com/1GYOU1/MyWeatherApp/assets/90018379/694268bb-7604-42ce-8945-8138f6f39be6)
-
+<img src="https://github.com/1GYOU1/MyWeatherApp/assets/90018379/694268bb-7604-42ce-8945-8138f6f39be6" style="width:300px"/>
 
 <br>
 
@@ -425,8 +422,7 @@ export default function App() {
 /* 코드 생략 */
 ```
 
-![app1](https://github.com/1GYOU1/MyWeatherApp/assets/90018379/5d741bdd-fff0-4f6b-a03f-de4ef3a705e6)
-
+<img src="https://github.com/1GYOU1/MyWeatherApp/assets/90018379/5d741bdd-fff0-4f6b-a03f-de4ef3a705e6" style="width:300px"/>
 
 <br>
 
@@ -562,8 +558,7 @@ expo를 사용해서 앱을 만들었다면, "@expo/vector-icons"가 설치되�
 
 사용법
 
-![스크린샷 2024-04-11 오후 10 22 25](https://github.com/1GYOU1/MyWeatherApp/assets/90018379/f06a297f-670c-4eb3-8246-8338432fa485)
-
+<img src="https://github.com/1GYOU1/MyWeatherApp/assets/90018379/f06a297f-670c-4eb3-8246-8338432fa485" style="width:500px"/>
 
 my-weather-app/App.js 최상단에 import
 ```js
@@ -778,15 +773,21 @@ const styles = StyleSheet.create({
 
 최종 화면 - iphone
 
-![05332010-ADA6-4C36-A645-60D490D6A1B4_1_105_c](https://github.com/1GYOU1/MyWeatherApp/assets/90018379/16e49911-0f06-4a5f-8ad5-5733d0e53832)
+<img src="https://github.com/1GYOU1/MyWeatherApp/assets/90018379/16e49911-0f06-4a5f-8ad5-5733d0e53832" style="width:300px"/>
 
+<br>
 
-![스크린샷 2024-04-13 오전 12 51 28](https://github.com/1GYOU1/MyWeatherApp/assets/90018379/992d7e7a-f9e1-4b89-9e5d-5f717bd38ce9)
+<img src="https://github.com/1GYOU1/MyWeatherApp/assets/90018379/992d7e7a-f9e1-4b89-9e5d-5f717bd38ce9" style="width:600px"/>
 
 ios, aos 애뮬레이터, 시뮬레이터로 실행해본 결과,
 .env 파일이 aos에서 제대로 작동되지 않는 오류가 있었다 ㅠ_ㅜ
 
 <br>
+
+<img src="https://github.com/1GYOU1/MyWeatherApp/assets/90018379/816436e6-1938-49bf-8890-c119f4dc4b2a" style="width:600px"/>
+
+++ update ) 2024-05-15 기준 
+<br> SDK 51로 업데이트 되고나서 실행해보니 정상적으로 동작하는 중 !
 
 ### react-native eas 배포
 
@@ -828,3 +829,47 @@ build가 완료되면, expo 사이트 > 생성한 프로젝트 > build 된 내 �
 <br>
 
 참고 url - https://docs.expo.dev/build/setup/
+
+<br>
+
+---
+
+++)2024-05-14 update
+
+<img src="https://github.com/1GYOU1/MyWeatherApp/assets/90018379/86254cec-672e-41a9-bfaf-13818be6ae07" style="width:300px;">
+
+최근 Expo Go 어플로 프로젝트 build 시켜놓은 플젝들이 상단 화면처럼 나와서 
+<br>SDK 51로 업그레이드를 시키라길래 해봤다 !
+
+1. 프로젝트 폴더 열고 하단 명령어 입력
+>$ npx expo install expo@^51.0.0 --fix
+
+2. 혹시 몰라 하단 명령어도 설치
+>$ npx expo-doctor@latest
+
+3. 프로젝트 실행하고 ios, aos에서도 추천하는 버전 설치
+>$ npm start
+
+>$ i
+
+>$ a
+
+4. yes ! 선택
+```
+✔ Expo Go 2.31.2 is recommended for SDK 51.0.0 
+Install the recommended Expo Go version? … yes
+```
+
+++) ios expo 버전 설치하다가 이런 오류가 나왔는데 냅다 패키지 설치
+
+<img src="https://github.com/1GYOU1/MyWeatherApp/assets/90018379/5d363c52-f536-4a11-bf70-23af3a93f297"/>
+
+<br>
+
+5. 다시 expo에 배포
+
+>$ npx eas update
+
+<br>
+
+참고 사이트 - https://expo.dev/changelog/2024/05-07-sdk-51
